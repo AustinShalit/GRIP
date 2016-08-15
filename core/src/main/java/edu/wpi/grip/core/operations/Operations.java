@@ -7,6 +7,7 @@ import edu.wpi.grip.core.operations.composite.BlobsReport;
 import edu.wpi.grip.core.operations.composite.BlurOperation;
 import edu.wpi.grip.core.operations.composite.ContoursReport;
 import edu.wpi.grip.core.operations.composite.ConvexHullsOperation;
+import edu.wpi.grip.core.operations.composite.CropOperation;
 import edu.wpi.grip.core.operations.composite.DesaturateOperation;
 import edu.wpi.grip.core.operations.composite.DistanceTransformOperation;
 import edu.wpi.grip.core.operations.composite.FilterContoursOperation;
@@ -81,6 +82,8 @@ public class Operations {
             () -> new BlurOperation(isf, osf)),
         new OperationMetaData(ConvexHullsOperation.DESCRIPTION,
             () -> new ConvexHullsOperation(isf, osf)),
+        new OperationMetaData(CropOperation.DESCRIPTION,
+            () -> new CropOperation(isf, osf)),
         new OperationMetaData(DesaturateOperation.DESCRIPTION,
             () -> new DesaturateOperation(isf, osf)),
         new OperationMetaData(DistanceTransformOperation.DESCRIPTION,

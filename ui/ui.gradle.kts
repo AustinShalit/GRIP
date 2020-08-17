@@ -39,7 +39,7 @@ dependencies {
     compile(project(":ui:preloader"))
     //ideProvider project(path= ":core", configuration= "compile")
 
-    compile(group = "org.controlsfx", name = "controlsfx", version = "11.0.0-RC2")
+    compile(group = "org.controlsfx", name = "controlsfx", version = "11.0.2")
     compile(group = "com.hierynomus", name = "sshj", version = "0.16.0")
     compile(group = "org.apache.velocity", name = "velocity", version = "1.7")
 
@@ -75,7 +75,8 @@ if (project.hasProperty("headless")) {
                 "-Dtestfx.headless=true",
                 "-Dprism.order=sw",
                 "-Dprism.text=t2k",
-                "-Dheadless.geometry=1600x1200-32"
+                "-Dheadless.geometry=1600x1200-32",
+                "--add-exports", "javafx.controls/com.sun.javafx.scene.control.inputmap=ALL-UNNAMED"
         )
     }
 }

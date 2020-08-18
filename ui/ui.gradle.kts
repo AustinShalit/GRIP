@@ -69,7 +69,7 @@ tasks.named<JavaCompile>("compileTestJava") {
 if (project.hasProperty("headless")) {
     println("Running UI tests headless (if supported by current JDK)")
     tasks.withType<Test> {
-        jvmArgs = listOf(
+        jvmArgs(listOf(
                 "-Djava.awt.headless=true",
                 "-Dtestfx.robot=glass",
                 "-Dtestfx.headless=true",
@@ -77,7 +77,7 @@ if (project.hasProperty("headless")) {
                 "-Dprism.text=t2k",
                 "-Dheadless.geometry=1600x1200-32",
                 "--add-exports", "javafx.controls/com.sun.javafx.scene.control.inputmap=ALL-UNNAMED"
-        )
+        ))
     }
 }
 
@@ -178,7 +178,7 @@ if (project.hasProperty("generation") || project.hasProperty("genonly")) {
     tasks.withType<Test> {
         dependsOn(installOpenCV)
         val defaultLibPath = System.getProperty("java.library.path");
-        jvmArgs = listOf("-Djava.library.path=$defaultLibPath${System.getProperty("path.separator")}$jniPath")
+        jvmArgs(listOf("-Djava.library.path=$defaultLibPath${System.getProperty("path.separator")}$jniPath"))
         if (project.hasProperty("genonly")) {
             useJUnit {
                 includeCategories = setOf("edu.wpi.grip.ui.codegeneration.GenerationTesting")
@@ -298,6 +298,9 @@ tasks.register<JpackageExec>("jpackage") {
 
 application {
     mainClassName = "edu.wpi.grip.ui.Launch"
+    applicationDefaultJvmArgs = listOf(
+        "--add-exports", "javafx.controls/com.sun.javafx.scene.control.inputmap=ALL-UNNAMED"
+    )
 }
 
 /**

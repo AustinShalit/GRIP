@@ -43,7 +43,7 @@ jobs:
         with:
           java-version: 14
           java-package: jdk+fx
-          architecture: ${{ matrix.architecture }}
+          # architecture: ${{ matrix.architecture }}
       - uses: actions/setup-java@v1
         with:
           java-version: 11.0.7

@@ -42,12 +42,12 @@ jobs:
         id: setup-java-14
         with:
           java-version: 14
-          java-package: jdk
+          java-package: jdk+fx
           architecture: ${{ matrix.architecture }}
       - uses: actions/setup-java@v1
         with:
           java-version: 11.0.7
-          java-package: jdk
+          java-package: jdk+fx
           architecture: ${{ matrix.architecture }}
       - run: java --version
       - name: Check

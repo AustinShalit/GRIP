@@ -11,26 +11,38 @@ jobs:
           - os: ubuntu-latest
             artifact-name: Linux
             architecture: x64
+            jdkFile11: "https://github.com/AdoptOpenJDK/openjdk11-binaries/releases/download/jdk-11.0.7%2B10/OpenJDK11U-jdk_x64_linux_hotspot_11.0.7_10.tar.gz"
+            jdkFile14: "https://github.com/AdoptOpenJDK/openjdk14-binaries/releases/download/jdk-14.0.1%2B7/OpenJDK14U-jdk_x64_linux_hotspot_14.0.1_7.tar.gz"
             build-options: ""
           - os: ubuntu-latest
             artifact-name: Linux-cuda
             architecture: x64
+            jdkFile11: "https://github.com/AdoptOpenJDK/openjdk11-binaries/releases/download/jdk-11.0.7%2B10/OpenJDK11U-jdk_x64_linux_hotspot_11.0.7_10.tar.gz"
+            jdkFile14: "https://github.com/AdoptOpenJDK/openjdk14-binaries/releases/download/jdk-14.0.1%2B7/OpenJDK14U-jdk_x64_linux_hotspot_14.0.1_7.tar.gz"
             build-options: "-Pcuda"
           - os: windows-latest
             artifact-name: Win64
             architecture: x64
+            jdkFile11: "https://github.com/AdoptOpenJDK/openjdk11-binaries/releases/download/jdk-11.0.7%2B10.2/OpenJDK11U-jdk_x64_windows_hotspot_11.0.7_10.zip"
+            jdkFile14: "https://github.com/AdoptOpenJDK/openjdk14-binaries/releases/download/jdk-14.0.1%2B7.1/OpenJDK14U-jdk_x64_windows_hotspot_14.0.1_7.zip"
             build-options: ""
           - os: windows-latest
             artifact-name: Win64-cuda
             architecture: x64
+            jdkFile11: "https://github.com/AdoptOpenJDK/openjdk11-binaries/releases/download/jdk-11.0.7%2B10.2/OpenJDK11U-jdk_x64_windows_hotspot_11.0.7_10.zip"
+            jdkFile14: "https://github.com/AdoptOpenJDK/openjdk14-binaries/releases/download/jdk-14.0.1%2B7.1/OpenJDK14U-jdk_x64_windows_hotspot_14.0.1_7.zip"
             build-options: "-Pcuda"
           - os: windows-latest
             artifact-name: Win32
             architecture: x86
+            jdkFile11: "https://github.com/AdoptOpenJDK/openjdk11-binaries/releases/download/jdk-11.0.7%2B10.2/OpenJDK11U-jdk_x86-32_windows_hotspot_11.0.7_10.zip"
+            jdkFile14: "https://github.com/AdoptOpenJDK/openjdk14-binaries/releases/download/jdk-14.0.1%2B7.1/OpenJDK14U-jdk_x86-32_windows_hotspot_14.0.1_7.zip"
             build-options: ""
           - os: macos-latest
             artifact-name: macOS
             architecture: x64
+            jdkFile11: "https://github.com/AdoptOpenJDK/openjdk11-binaries/releases/download/jdk-11.0.7%2B10/OpenJDK11U-jdk_x64_mac_hotspot_11.0.7_10.tar.gz"
+            jdkFile14: "https://github.com/AdoptOpenJDK/openjdk14-binaries/releases/download/jdk-14.0.1%2B7/OpenJDK14U-jdk_x64_mac_hotspot_14.0.1_7.tar.gz"
             build-options: ""
     name: "Build - ${{ matrix.artifact-name }}"
     runs-on: ${{ matrix.os }}
@@ -38,17 +50,28 @@ jobs:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
+      - name: Download Java
+        id: download-java
+        run: |
+          mkdir jdk && cd jdk
+          wget ${{ matrix.jdkFile11 }}
+          wget ${{ matrix.jdkFile14 }}
+
+          echo "::set-output name=jdkFile11::jdk/$(basename ${{ matrix.jdkFile11 }})"
+          echo "::set-output name=jdkFile14::jdk/$(basename ${{ matrix.jdkFile14 }})"
       - uses: actions/setup-java@v1
         id: setup-java-14
         with:
           java-version: 14
           java-package: jdk+fx
-          # architecture: ${{ matrix.architecture }}
+          architecture: ${{ matrix.architecture }}
+          jdkFile: ${{ steps.download-java.outputs.jdkFile14 }}
       - uses: actions/setup-java@v1
         with:
           java-version: 11.0.7
           java-package: jdk+fx
           architecture: ${{ matrix.architecture }}
+          jdkFile: ${{ steps.download-java.outputs.jdkFile11 }}
       - run: java --version
       - name: Check
         run: ./gradlew check jacocoTestReport jacocoRootReport :ui:jpackage -Pheadless=true -Pgeneration -PlogTests -Pjdk14=${{ steps.setup-java-14.outputs.path }} --stacktrace ${{ matrix.build-options }}

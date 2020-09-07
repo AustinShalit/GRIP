@@ -19,7 +19,7 @@ jobs:
             architecture: x64
             jdkFile11: "https://github.com/AdoptOpenJDK/openjdk11-binaries/releases/download/jdk-11.0.7%2B10/OpenJDK11U-jdk_x64_linux_hotspot_11.0.7_10.tar.gz"
             jdkFile14: "https://github.com/AdoptOpenJDK/openjdk14-binaries/releases/download/jdk-14.0.1%2B7/OpenJDK14U-jdk_x64_linux_hotspot_14.0.1_7.tar.gz"
-            build-options: "-Pcuda"
+            build-options: "-Pcuda -x test"
           - os: windows-latest
             artifact-name: Win64
             architecture: x64
@@ -31,7 +31,7 @@ jobs:
             architecture: x64
             jdkFile11: "https://github.com/AdoptOpenJDK/openjdk11-binaries/releases/download/jdk-11.0.7%2B10.2/OpenJDK11U-jdk_x64_windows_hotspot_11.0.7_10.zip"
             jdkFile14: "https://github.com/AdoptOpenJDK/openjdk14-binaries/releases/download/jdk-14.0.1%2B7.1/OpenJDK14U-jdk_x64_windows_hotspot_14.0.1_7.zip"
-            build-options: "-PskipUITests -Pcuda"
+            build-options: "-PskipUITests -Pcuda -x test"
           - os: windows-latest
             artifact-name: Win32
             architecture: x86

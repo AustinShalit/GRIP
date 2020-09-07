@@ -55,8 +55,8 @@ jobs:
         shell: bash
         run: |
           mkdir jdk && cd jdk
-          wget ${{ matrix.jdkFile11 }}
-          wget ${{ matrix.jdkFile14 }}
+          curl -O ${{ matrix.jdkFile11 }}
+          curl -O ${{ matrix.jdkFile14 }}
 
           echo "::set-output name=jdkFile11::jdk/$(basename ${{ matrix.jdkFile11 }})"
           echo "::set-output name=jdkFile14::jdk/$(basename ${{ matrix.jdkFile14 }})"

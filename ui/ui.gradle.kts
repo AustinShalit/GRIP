@@ -339,7 +339,7 @@ fun JpackageExec.configureForCurrentOs() {
             val installerFileDir = installerFilesBaseDir.resolve("linux")
             resourceDir.set(installerFileDir)
             icon.set(installerFileDir.resolve("GRIP.png"))
-            installerType.set("deb")
+            installerType.set("rpm")
         }
     }
 }

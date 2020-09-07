@@ -52,6 +52,7 @@ jobs:
           fetch-depth: 0
       - name: Download Java
         id: download-java
+        shell: bash
         run: |
           mkdir jdk && cd jdk
           wget ${{ matrix.jdkFile11 }}
@@ -72,7 +73,6 @@ jobs:
           java-package: jdk+fx
           architecture: ${{ matrix.architecture }}
           jdkFile: ${{ steps.download-java.outputs.jdkFile11 }}
-      - run: java --version
       - name: Check
         run: ./gradlew check jacocoTestReport jacocoRootReport :ui:jpackage -Pheadless=true -Pgeneration -PlogTests -Pjdk14=${{ steps.setup-java-14.outputs.path }} --stacktrace ${{ matrix.build-options }}
       - uses: actions/upload-artifact@v2

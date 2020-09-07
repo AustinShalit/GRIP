@@ -37,7 +37,7 @@ dependencies {
     api(group = "com.google.auto.value", name = "auto-value", version = "1.3")
     annotationProcessor("com.google.auto.value:auto-value:1.3")
     api(group = "com.google.code.gson", name = "gson", version = "2.8.0")
-    api(group = "org.eclipse.jetty", name = "jetty-server", version = "9.4.31.v20200723")
+    api(group = "org.eclipse.jetty", name = "jetty-server", version = "9.3.14.v20161028")
     testCompile(group = "org.apache.httpcomponents", name = "httpclient", version = "4.5.2")
     testCompile(group = "org.apache.httpcomponents", name = "httpcore", version = "4.4.5")
     testCompile(group = "org.apache.httpcomponents", name = "httpmime", version = "4.5.2")
